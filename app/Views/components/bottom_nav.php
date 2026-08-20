@@ -19,6 +19,10 @@
         <span>♙</span>
         <span>Pelanggan</span>
     </a>
+    <a href="<?= site_url('channels') ?>" class="nav-item <?= url_is('channels*') ? 'active' : '' ?>">
+        <span>⌁</span>
+        <span>Channel</span>
+    </a>
 
     <a href="<?= site_url('business/profile') ?>" class="nav-item <?= url_is('business/profile*') ? 'active' : '' ?>">
         <span>⚙</span>

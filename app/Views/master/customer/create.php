@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,73 +83,145 @@
             font-size: 16px;
             font-weight: 600;
         }
+
+        /*
+         * ==============================
+         * NAVIGATION
+         * ==============================
+         */
+
+        .bottom-nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            display: flex;
+            justify-content: space-around;
+
+            padding: 8px 6px;
+
+            background: #ffffff;
+            border-top: 1px solid #e5e7eb;
+
+            z-index: 1000;
+        }
+
+
+        .nav-item {
+            flex: 1;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            gap: 3px;
+
+            padding: 6px 2px;
+
+            color: #6b7280;
+
+            text-decoration: none;
+
+            font-size: 11px;
+        }
+
+
+        .nav-item span:first-child {
+            font-size: 19px;
+        }
+
+
+        .nav-item.active {
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+
+        @media (min-width: 768px) {
+
+            .page {
+                padding: 40px 20px;
+                padding-bottom: 40px;
+            }
+
+
+            .bottom-nav {
+                position: static;
+
+                max-width: 600px;
+
+                margin: 24px auto 0;
+
+                border: 1px solid #e5e7eb;
+                border-radius: 14px;
+            }
+
+        }
     </style>
 </head>
 
 <body>
+    <div class="page">
+        <div class="container">
 
-<div class="container">
+            <div class="card">
 
-    <a href="<?= site_url('customers') ?>" class="back">
-        ← Kembali ke Pelanggan
-    </a>
+                <h1>Tambah Pelanggan</h1>
 
-    <div class="card">
+                <p class="subtitle">
+                    Tambahkan pelanggan yang melakukan pembelian.
+                </p>
 
-        <h1>Tambah Pelanggan</h1>
+                <form action="<?= site_url('customers/store') ?>" method="post">
 
-        <p class="subtitle">
-            Tambahkan pelanggan yang melakukan pembelian.
-        </p>
+                    <?= csrf_field() ?>
 
-        <form action="<?= site_url('customers/store') ?>" method="post">
+                    <div class="form-group">
 
-            <?= csrf_field() ?>
+                        <label for="name">
+                            Nama Pelanggan
+                        </label>
 
-            <div class="form-group">
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value="<?= old('name') ?>"
+                            placeholder="Contoh: Budi"
+                            autocomplete="name"
+                            required>
 
-                <label for="name">
-                    Nama Pelanggan
-                </label>
+                    </div>
 
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value="<?= old('name') ?>"
-                    placeholder="Contoh: Budi"
-                    autocomplete="name"
-                    required
-                >
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Nomor HP
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            value="<?= old('phone') ?>"
+                            placeholder="Contoh: 08123456789"
+                            autocomplete="tel">
+
+                    </div>
+
+                    <button type="submit">
+                        Simpan Pelanggan
+                    </button>
+
+                </form>
 
             </div>
 
-            <div class="form-group">
-
-                <label for="phone">
-                    Nomor HP
-                </label>
-
-                <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value="<?= old('phone') ?>"
-                    placeholder="Contoh: 08123456789"
-                    autocomplete="tel"
-                >
-
-            </div>
-
-            <button type="submit">
-                Simpan Pelanggan
-            </button>
-
-        </form>
-
+        </div>
     </div>
-
-</div>
+    <?= $this->include('components/bottom_nav') ?>
 
 </body>
+
 </html>

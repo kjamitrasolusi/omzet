@@ -26,24 +26,102 @@
             margin: auto;
         }
 
-        .back {
-            display: inline-block;
+        /* ==============================
+           HEADER
+           ============================== */
+
+        .header {
             margin-bottom: 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+
+            margin-bottom: 14px;
+
             color: #2563eb;
+
             text-decoration: none;
+
             font-size: 14px;
         }
 
-        h1 {
-            margin: 0 0 6px;
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .header-row {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 12px;
+        }
+
+        .header-title {
+            min-width: 0;
+        }
+
+        .header h1 {
+            margin: 0;
+
             font-size: 24px;
+
+            line-height: 1.3;
         }
 
         .subtitle {
-            margin: 0 0 20px;
+            margin: 6px 0 0;
+
             color: #6b7280;
+
             font-size: 14px;
+
+            line-height: 1.5;
         }
+
+        /* ==============================
+           ADD BUTTON
+           ============================== */
+
+        .add-button {
+            flex: 0 0 auto;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 42px;
+
+            padding: 0 14px;
+
+            background: #2563eb;
+
+            color: #ffffff;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+        .add-button:hover {
+            background: #1d4ed8;
+        }
+
+        .add-button:active {
+            transform: scale(0.97);
+        }
+
 
         .customer-list {
             display: grid;
@@ -157,15 +235,38 @@
     <div class="page">
         <div class="container">
 
-            <!-- <a href="<?= site_url('home') ?>" class="back">
-        ← Kembali
-    </a> -->
+            <div class="header">
 
-            <h1>Pelanggan</h1>
 
-            <p class="subtitle">
-                Daftar pelanggan usaha
-            </p>
+                <div class="header-row">
+
+
+                    <div class="header-title">
+
+                        <h1>
+                            Pelanggan
+                        </h1>
+
+                        <p class="subtitle">
+                            Daftar pelanggan usaha
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="<?= site_url('customers/create') ?>"
+                        class="add-button">
+                        + Tambah pelanggan
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
 
             <?php if (empty($customers)) : ?>
 

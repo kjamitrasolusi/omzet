@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,67 +92,143 @@
             color: #991b1b;
             font-size: 14px;
         }
+
+        /*
+         * ==============================
+         * NAVIGATION
+         * ==============================
+         */
+
+        .bottom-nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            display: flex;
+            justify-content: space-around;
+
+            padding: 8px 6px;
+
+            background: #ffffff;
+            border-top: 1px solid #e5e7eb;
+
+            z-index: 1000;
+        }
+
+
+        .nav-item {
+            flex: 1;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            gap: 3px;
+
+            padding: 6px 2px;
+
+            color: #6b7280;
+
+            text-decoration: none;
+
+            font-size: 11px;
+        }
+
+
+        .nav-item span:first-child {
+            font-size: 19px;
+        }
+
+
+        .nav-item.active {
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+
+        @media (min-width: 768px) {
+
+            .page {
+                padding: 40px 20px;
+                padding-bottom: 40px;
+            }
+
+
+            .bottom-nav {
+                position: static;
+
+                max-width: 600px;
+
+                margin: 24px auto 0;
+
+                border: 1px solid #e5e7eb;
+                border-radius: 14px;
+            }
+
+        }
     </style>
 </head>
 
 <body>
+    <div class="page">
+        <div class="container">
 
-<div class="container">
+            <!-- <a href="<?= site_url('channels') ?>" class="back">
+            ← Kembali ke Channel
+        </a> -->
 
-    <a href="<?= site_url('channels') ?>" class="back">
-        ← Kembali ke Channel
-    </a>
+            <div class="card">
 
-    <div class="card">
+                <h1>Tambah Channel</h1>
 
-        <h1>Tambah Channel</h1>
+                <p class="subtitle">
+                    Tambahkan sumber atau channel penjualan usaha.
+                </p>
 
-        <p class="subtitle">
-            Tambahkan sumber atau channel penjualan usaha.
-        </p>
+                <?php if (session()->getFlashdata('error')) : ?>
 
-        <?php if (session()->getFlashdata('error')) : ?>
+                    <div class="alert">
+                        <?= esc(session()->getFlashdata('error')) ?>
+                    </div>
 
-            <div class="alert">
-                <?= esc(session()->getFlashdata('error')) ?>
+                <?php endif; ?>
+
+                <form
+                    action="<?= site_url('channels/store') ?>"
+                    method="post">
+
+                    <?= csrf_field() ?>
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Nama Channel
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value="<?= old('name') ?>"
+                            placeholder="Contoh: WhatsApp"
+                            required
+                            autofocus>
+
+                    </div>
+
+                    <button type="submit">
+                        Simpan Channel
+                    </button>
+
+                </form>
+
             </div>
 
-        <?php endif; ?>
-
-        <form
-            action="<?= site_url('channels/store') ?>"
-            method="post"
-        >
-
-            <?= csrf_field() ?>
-
-            <div class="form-group">
-
-                <label for="name">
-                    Nama Channel
-                </label>
-
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value="<?= old('name') ?>"
-                    placeholder="Contoh: WhatsApp"
-                    required
-                    autofocus
-                >
-
-            </div>
-
-            <button type="submit">
-                Simpan Channel
-            </button>
-
-        </form>
-
+        </div>
     </div>
-
-</div>
+    <?= $this->include('components/bottom_nav') ?>
 
 </body>
+
 </html>
