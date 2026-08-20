@@ -1,0 +1,38 @@
+# Folder dependencies Composer
+/vendor/
+
+# File Environment (Sangat penting agar kredensial database tidak bocor ke publik)
+.env
+.env.backup
+.env.production
+sales.backup
+
+# Folder Writable (Mengabaikan file yang di-generate sistem seperti log, cache, dan sesi)
+# Tapi tetap mempertahankan struktur foldernya menggunakan .gitkeep
+/writable/cache/*
+!/writable/cache/.gitkeep
+/writable/logs/*
+!/writable/logs/.gitkeep
+/writable/session/*
+!/writable/session/.gitkeep
+/writable/uploads/*
+!/writable/uploads/.gitkeep
+/writable/debugbar/*
+!/writable/debugbar/.gitkeep
+
+# File Sistem Operasi
+.DS_Store
+.DS_Store?
+._*
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Konfigurasi IDE / Editor
+/.idea/
+/.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Folder Build atau Testing (Opsional, jika Anda menggunakan PHPUnit)
+/build/
