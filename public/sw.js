@@ -1,11 +1,13 @@
 // OmzetInsight PWA Service Worker
-const CACHE_NAME = 'omzetinsight-v1';
+const CACHE_NAME = 'omzetinsight-v1.1'; // Update cache name to force refresh
 
 // Assets that should be cached for offline use
 const STATIC_ASSETS = [
-  '/sales/home',
-  '/sales/public/css/app.css',
-  '/sales/public/icons/icon.svg',
+  './',
+  './css/app.css',
+  './icons/icon.svg',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
   'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
   'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css',
 ];
@@ -51,7 +53,8 @@ self.addEventListener('fetch', (event) => {
       .then((response) => {
         // Cache successful responses for static assets
         if (response.ok && (
-          url.pathname.startsWith('/sales/public/') ||
+          url.pathname.includes('/css/') ||
+          url.pathname.includes('/icons/') ||
           url.hostname.includes('jsdelivr.net') ||
           url.hostname.includes('fonts.googleapis.com')
         )) {
