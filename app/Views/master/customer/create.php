@@ -1,227 +1,81 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Tambah Pelanggan - UMKM Sales Insight</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            color: #1f2937;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 500px;
-            margin: 40px auto;
-        }
-
-        .back {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #2563eb;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .card {
-            background: #ffffff;
-            padding: 24px;
-            border-radius: 14px;
-            border: 1px solid #e5e7eb;
-        }
-
-        h1 {
-            margin: 0 0 8px;
-            font-size: 22px;
-        }
-
-        .subtitle {
-            margin: 0 0 24px;
-            color: #6b7280;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 7px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        input {
-            width: 100%;
-            height: 48px;
-            padding: 0 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 10px;
-            font-size: 16px;
-        }
-
-        button {
-            width: 100%;
-            height: 48px;
-            border: 0;
-            border-radius: 10px;
-            background: #2563eb;
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        /*
-         * ==============================
-         * NAVIGATION
-         * ==============================
-         */
-
-        .bottom-nav {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-
-            display: flex;
-            justify-content: space-around;
-
-            padding: 8px 6px;
-
-            background: #ffffff;
-            border-top: 1px solid #e5e7eb;
-
-            z-index: 1000;
-        }
-
-
-        .nav-item {
-            flex: 1;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            gap: 3px;
-
-            padding: 6px 2px;
-
-            color: #6b7280;
-
-            text-decoration: none;
-
-            font-size: 11px;
-        }
-
-
-        .nav-item span:first-child {
-            font-size: 19px;
-        }
-
-
-        .nav-item.active {
-            color: #2563eb;
-            font-weight: 700;
-        }
-
-
-        @media (min-width: 768px) {
-
-            .page {
-                padding: 40px 20px;
-                padding-bottom: 40px;
-            }
-
-
-            .bottom-nav {
-                position: static;
-
-                max-width: 600px;
-
-                margin: 24px auto 0;
-
-                border: 1px solid #e5e7eb;
-                border-radius: 14px;
-            }
-
-        }
-    </style>
+    <?= $this->include('components/app_head') ?>
 </head>
-
 <body>
-    <div class="page">
-        <div class="container">
+    <?= $this->include('components/top_navbar') ?>
 
-            <div class="card">
+    <div class="container-fluid container-max-wide py-4">
+        <div class="form-card-container">
+            <div class="card-custom p-4 p-md-4">
+                <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+                    <div class="bg-green-light rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px;">
+                        <i class="bi bi-person-plus fs-5"></i>
+                    </div>
+                    <div>
+                        <h1 class="h5 fw-bold text-dark mb-0">Tambah Pelanggan</h1>
+                        <p class="text-muted small mb-0">Tambahkan informasi kontak pelanggan baru</p>
+                    </div>
+                </div>
 
-                <h1>Tambah Pelanggan</h1>
-
-                <p class="subtitle">
-                    Tambahkan pelanggan yang melakukan pembelian.
-                </p>
+                <?php if (session()->getFlashdata('error')) : ?>
+                    <div class="alert alert-danger rounded-3 d-flex align-items-center gap-2 mb-4 py-2 px-3 small">
+                        <i class="bi bi-exclamation-triangle-fill fs-6"></i>
+                        <div><?= esc(session()->getFlashdata('error')) ?></div>
+                    </div>
+                <?php endif; ?>
 
                 <form action="<?= site_url('customers/store') ?>" method="post">
-
                     <?= csrf_field() ?>
 
-                    <div class="form-group">
-
-                        <label for="name">
-                            Nama Pelanggan
-                        </label>
-
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            value="<?= old('name') ?>"
-                            placeholder="Contoh: Budi"
-                            autocomplete="name"
-                            required>
-
+                    <div class="mb-3">
+                        <label for="name" class="form-label fw-semibold text-dark small">Nama Pelanggan <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-muted border-end-0 rounded-start-3">
+                                <i class="bi bi-person"></i>
+                            </span>
+                            <input
+                                type="text"
+                                class="form-control border-start-0 rounded-end-3"
+                                id="name"
+                                name="name"
+                                value="<?= old('name') ?>"
+                                placeholder="Contoh: Budi Santoso"
+                                autocomplete="name"
+                                required
+                                autofocus>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-
-                        <label for="phone">
-                            Nomor HP
-                        </label>
-
-                        <input
-                            type="tel"
-                            id="phone"
-                            name="phone"
-                            value="<?= old('phone') ?>"
-                            placeholder="Contoh: 08123456789"
-                            autocomplete="tel">
-
+                    <div class="mb-4">
+                        <label for="phone" class="form-label fw-semibold text-dark small">Nomor HP / WhatsApp <span class="text-muted font-weight-normal font-size-12">(opsional)</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-muted border-end-0 rounded-start-3">
+                                <i class="bi bi-telephone"></i>
+                            </span>
+                            <input
+                                type="tel"
+                                class="form-control border-start-0 rounded-end-3"
+                                id="phone"
+                                name="phone"
+                                value="<?= old('phone') ?>"
+                                placeholder="Contoh: 08123456789"
+                                autocomplete="tel">
+                        </div>
                     </div>
 
-                    <button type="submit">
-                        Simpan Pelanggan
-                    </button>
-
+                    <div class="d-flex align-items-center justify-content-end gap-2 pt-2 border-top">
+                        <button type="submit" class="btn btn-primary rounded-3 px-4 py-2 shadow-sm fw-semibold">
+                            <i class="bi bi-check-circle me-1"></i> Simpan Pelanggan
+                        </button>
+                    </div>
                 </form>
-
             </div>
-
         </div>
     </div>
+
     <?= $this->include('components/bottom_nav') ?>
-
 </body>
-
 </html>

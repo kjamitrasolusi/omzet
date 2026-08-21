@@ -40,3 +40,5 @@ $routes->post('channels/store', 'Master\Channel::store');
 $routes->get('sales/input', 'Sales\Input::index');
 $routes->post('sales/store', 'Sales\Input::store');
 $routes->get('sales/history', 'Sales\History::index');
+$routes->get('sales/edit/(:num)', 'Sales\Edit::index/$1');
+$routes->post('sales/edit/update/(:num)', 'Sales\Edit::update/$1');

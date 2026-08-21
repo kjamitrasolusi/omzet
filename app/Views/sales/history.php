@@ -1,361 +1,162 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
     <title>Riwayat Penjualan - UMKM Sales Insight</title>
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            background: #f5f7fa;
-            color: #1f2937;
-            font-family: Arial, sans-serif;
-        }
-
-        .page {
-            width: 100%;
-            min-height: 100vh;
-            padding: 16px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* HEADER */
-
-        .header {
-            margin-bottom: 20px;
-        }
-
-        .back {
-            display: inline-block;
-            margin-bottom: 14px;
-            color: #2563eb;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .back:hover {
-            text-decoration: underline;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 24px;
-            line-height: 1.3;
-        }
-
-        .subtitle {
-            margin: 6px 0 0;
-            color: #6b7280;
-            font-size: 14px;
-        }
-
-        /* SALES LIST */
-
-        .sales-list {
-            width: 100%;
-        }
-
-        /* SALE CARD */
-
-        .sale-card {
-            width: 100%;
-            margin-bottom: 12px;
-            padding: 16px;
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 14px;
-        }
-
-        .sale-date {
-            margin-bottom: 8px;
-            color: #6b7280;
-            font-size: 13px;
-        }
-
-        .product-name {
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 1.45;
-        }
-
-        .sale-detail {
-            margin-top: 8px;
-            color: #4b5563;
-            font-size: 14px;
-        }
-
-        /* META */
-
-        .sale-meta {
-            display: block;
-            margin-top: 12px;
-        }
-
-        .badge {
-            display: inline-block;
-            margin-right: 8px;
-            margin-bottom: 6px;
-            padding: 6px 10px;
-            border-radius: 999px;
-            background: #f3f4f6;
-            color: #4b5563;
-            font-size: 12px;
-            line-height: 1;
-        }
-
-        /* AMOUNT */
-
-        .sale-amount {
-            margin-top: 10px;
-            color: #111827;
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        /* EMPTY */
-
-        .empty {
-            padding: 30px 20px;
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 14px;
-            text-align: center;
-            color: #6b7280;
-        }
-
-        /* DESKTOP */
-
-        @media (min-width: 768px) {
-
-            .page {
-                padding: 40px 20px;
-            }
-
-            .container {
-                max-width: 700px;
-            }
-
-            .sale-card {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 26px;
-            }
-
-        }
-
-    </style>
-
+    <?= $this->include('components/app_head') ?>
 </head>
-
-
 <body>
+    <?= $this->include('components/top_navbar') ?>
 
-
-<div class="page">
-
-    <div class="container">
-
-
-        <!-- HEADER -->
-
-        <div class="header">
-
-            <a
-                href="<?= site_url('home') ?>"
-                class="back"
-            >
-                ← Kembali
+    <div class="container-fluid container-max-wide py-3 py-md-4">
+        <!-- Page Header -->
+        <div class="d-flex align-items-center justify-content-between gap-3 mb-4">
+            <div>
+                <h1 class="h3 fw-bold tracking-tight text-dark mb-1">
+                    <i class="bi bi-clock-history text-primary me-2"></i>Riwayat Penjualan
+                </h1>
+                <p class="text-muted small mb-0">Daftar lengkap transaksi penjualan yang telah dicatat</p>
+            </div>
+            <a href="<?= site_url('sales/input') ?>" class="btn btn-primary rounded-pill px-3 py-2 d-flex align-items-center gap-2 shadow-sm font-weight-semibold">
+                <i class="bi bi-plus-lg"></i>
+                <span class="d-none d-sm-inline">Penjualan Baru</span>
             </a>
-
-            <h1>
-                Riwayat Penjualan
-            </h1>
-
-            <p class="subtitle">
-                Daftar transaksi penjualan usaha
-            </p>
-
         </div>
 
-
-        <!-- DATA -->
-
         <?php if (empty($sales)) : ?>
-
-            <div class="empty">
-
-                Belum ada transaksi penjualan.
-
+            <div class="card-custom p-5 text-center my-4">
+                <div class="bg-blue-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <i class="bi bi-receipt fs-3"></i>
+                </div>
+                <h6 class="fw-bold text-dark mb-1">Belum Ada Transaksi Penjualan</h6>
+                <p class="text-muted small mb-3">Mulai catat transaksi harian untuk memantau omzet penjualan Anda</p>
+                <div>
+                    <a href="<?= site_url('sales/input') ?>" class="btn btn-primary btn-sm rounded-pill px-4">
+                        <i class="bi bi-plus-lg me-1"></i> Catat Penjualan Pertama
+                    </a>
+                </div>
             </div>
-
         <?php else : ?>
-
-            <div class="sales-list">
-
-
-                <?php foreach ($sales as $sale) : ?>
-
-
-                    <div class="sale-card">
-
-
-                        <!-- TANGGAL -->
-
-                        <div class="sale-date">
-
-                            <?php
-
-                            $bulan = [
-                                1  => 'Januari',
-                                2  => 'Februari',
-                                3  => 'Maret',
-                                4  => 'April',
-                                5  => 'Mei',
-                                6  => 'Juni',
-                                7  => 'Juli',
-                                8  => 'Agustus',
-                                9  => 'September',
-                                10 => 'Oktober',
-                                11 => 'November',
-                                12 => 'Desember'
-                            ];
-
-                            $timestamp = strtotime(
-                                $sale['transaction_date']
-                            );
-
-                            echo date('d', $timestamp)
-                                . ' '
-                                . $bulan[
-                                    (int) date('n', $timestamp)
-                                ]
-                                . ' '
-                                . date('Y', $timestamp);
-
-                            ?>
-
-                        </div>
-
-
-                        <!-- PRODUK -->
-
-                        <div class="product-name">
-
-                            <?= esc(
-                                $sale['product_name']
-                            ) ?>
-
-                        </div>
-
-
-                        <!-- JUMLAH -->
-
-                        <div class="sale-detail">
-
-                            <?= number_format(
-                                (float) $sale['quantity'],
-                                0,
-                                ',',
-                                '.'
-                            ) ?>
-
-                            unit
-
-                        </div>
-
-
-                        <!-- CUSTOMER + CHANNEL -->
-
-                        <div class="sale-meta">
-
-
-                            <?php if (
-                                !empty(
-                                    $sale['customer_name']
-                                )
-                            ) : ?>
-
-                                <span class="badge">
-
-                                    <?= esc(
-                                        $sale['customer_name']
-                                    ) ?>
-
-                                </span>
-
-                            <?php endif; ?>
-
-
-                            <?php if (
-                                !empty(
-                                    $sale['channel_name']
-                                )
-                            ) : ?>
-
-                                <span class="badge">
-
-                                    <?= esc(
-                                        $sale['channel_name']
-                                    ) ?>
-
-                                </span>
-
-                            <?php endif; ?>
-
-
-                        </div>
-
-
-                        <!-- NILAI -->
-
-                        <div class="sale-amount">
-
-                            Rp <?= number_format(
-                                (float) $sale['amount'],
-                                0,
-                                ',',
-                                '.'
-                            ) ?>
-
-                        </div>
-
-
-                    </div>
-
-
-                <?php endforeach; ?>
-
-
+            <!-- Laptop / Desktop Table View (d-none d-md-block) -->
+            <div class="card-custom d-none d-md-block overflow-hidden mb-4">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light border-bottom">
+                            <tr class="text-muted small fw-semibold">
+                                <th class="ps-4 py-3">Tanggal</th>
+                                <th class="py-3">Produk</th>
+                                <th class="py-3">Qty</th>
+                                <th class="py-3">Pelanggan & Channel</th>
+                                <th class="py-3 text-end">Total Penjualan</th>
+                                <th class="pe-4 py-3 text-end">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($sales as $sale) : ?>
+                                <tr>
+                                    <td class="ps-4 py-3 text-secondary small">
+                                        <?php
+                                        $bulan = [
+                                            1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr',
+                                            5 => 'Mei', 6 => 'Jun', 7 => 'Jul', 8 => 'Agu',
+                                            9 => 'Sep', 10 => 'Okt', 11 => 'Nov', 12 => 'Des'
+                                        ];
+                                        $ts = strtotime($sale['transaction_date']);
+                                        echo date('d', $ts) . ' ' . $bulan[(int)date('n', $ts)] . ' ' . date('Y', $ts);
+                                        ?>
+                                    </td>
+                                    <td class="py-3 fw-bold text-dark">
+                                        <?= esc($sale['product_name']) ?>
+                                    </td>
+                                    <td class="py-3">
+                                        <span class="badge bg-light text-dark border font-weight-normal">
+                                            <?= number_format((float)$sale['quantity'], 0, ',', '.') ?> unit
+                                        </span>
+                                    </td>
+                                    <td class="py-3">
+                                        <div class="d-flex gap-1 flex-wrap">
+                                            <?php if (!empty($sale['customer_name'])) : ?>
+                                                <span class="badge bg-light text-secondary border font-weight-normal">
+                                                    <i class="bi bi-person me-1"></i><?= esc($sale['customer_name']) ?>
+                                                </span>
+                                            <?php endif; ?>
+                                            <?php if (!empty($sale['channel_name'])) : ?>
+                                                <span class="badge bg-blue-light font-weight-normal">
+                                                    <i class="bi bi-diagram-3 me-1"></i><?= esc($sale['channel_name']) ?>
+                                                </span>
+                                            <?php endif; ?>
+                                            <?php if (empty($sale['customer_name']) && empty($sale['channel_name'])) : ?>
+                                                <span class="text-muted small">-</span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 text-end fw-bold text-primary fs-6">
+                                        Rp <?= number_format((float)$sale['amount'], 0, ',', '.') ?>
+                                    </td>
+                                    <td class="pe-4 py-3 text-end">
+                                        <?php if (isset($sale['id'])) : ?>
+                                            <a href="<?= site_url('sales/edit/' . $sale['id']) ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                                                <i class="bi bi-pencil me-1"></i> Edit
+                                            </a>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
+            <!-- Mobile Card View (d-md-none) -->
+            <div class="d-md-none d-flex flex-column gap-3 mb-4">
+                <?php foreach ($sales as $sale) : ?>
+                    <div class="card-custom p-3 hover-lift">
+                        <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                            <div>
+                                <span class="text-muted small">
+                                    <?php
+                                    $ts = strtotime($sale['transaction_date']);
+                                    echo date('d', $ts) . ' ' . $bulan[(int)date('n', $ts)] . ' ' . date('Y', $ts);
+                                    ?>
+                                </span>
+                                <h6 class="fw-bold text-dark mb-0 mt-1">
+                                    <?= esc($sale['product_name']) ?>
+                                </h6>
+                            </div>
+                            <div class="text-end">
+                                <span class="fw-bold text-primary fs-6">
+                                    Rp <?= number_format((float)$sale['amount'], 0, ',', '.') ?>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-2">
+                            <div class="d-flex gap-1 flex-wrap">
+                                <span class="badge bg-light text-dark border font-weight-normal">
+                                    <?= number_format((float)$sale['quantity'], 0, ',', '.') ?> unit
+                                </span>
+                                <?php if (!empty($sale['customer_name'])) : ?>
+                                    <span class="badge bg-light text-secondary border font-weight-normal">
+                                        👤 <?= esc($sale['customer_name']) ?>
+                                    </span>
+                                <?php endif; ?>
+                                <?php if (!empty($sale['channel_name'])) : ?>
+                                    <span class="badge bg-blue-light font-weight-normal">
+                                        📡 <?= esc($sale['channel_name']) ?>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
+                            <?php if (isset($sale['id'])) : ?>
+                                <a href="<?= site_url('sales/edit/' . $sale['id']) ?>" class="btn btn-sm btn-light border rounded-pill px-2-5 py-1 text-muted small">
+                                    Edit
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         <?php endif; ?>
-
-
     </div>
 
-</div>
-
-
+    <?= $this->include('components/bottom_nav') ?>
 </body>
-
 </html>

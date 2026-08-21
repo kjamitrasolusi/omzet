@@ -1,431 +1,117 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <title>Produk - UMKM Sales Insight</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-        }
-
-        body {
-            background: #f5f7fa;
-            color: #1f2937;
-            font-family: Arial, sans-serif;
-        }
-
-        .page {
-            width: 100%;
-            min-height: 100vh;
-            padding: 16px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* ==============================
-           HEADER
-           ============================== */
-
-        .header {
-            margin-bottom: 20px;
-        }
-
-        .back-link {
-            display: inline-block;
-
-            margin-bottom: 14px;
-
-            color: #2563eb;
-
-            text-decoration: none;
-
-            font-size: 14px;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
-        .header-row {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 12px;
-        }
-
-        .header-title {
-            min-width: 0;
-        }
-
-        .header h1 {
-            margin: 0;
-
-            font-size: 24px;
-
-            line-height: 1.3;
-        }
-
-        .subtitle {
-            margin: 6px 0 0;
-
-            color: #6b7280;
-
-            font-size: 14px;
-
-            line-height: 1.5;
-        }
-
-        /* ==============================
-           ADD BUTTON
-           ============================== */
-
-        .add-button {
-            flex: 0 0 auto;
-
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            min-height: 42px;
-
-            padding: 0 14px;
-
-            background: #2563eb;
-
-            color: #ffffff;
-
-            border-radius: 10px;
-
-            text-decoration: none;
-
-            font-size: 13px;
-
-            font-weight: 700;
-
-            white-space: nowrap;
-        }
-
-        .add-button:hover {
-            background: #1d4ed8;
-        }
-
-        .add-button:active {
-            transform: scale(0.97);
-        }
-
-        /* ==============================
-           PRODUCT LIST
-           ============================== */
-
-        .product-list {
-            display: grid;
-
-            gap: 12px;
-        }
-
-        .product-item {
-            width: 100%;
-
-            padding: 16px;
-
-            background: #ffffff;
-
-            border: 1px solid #e5e7eb;
-
-            border-radius: 14px;
-        }
-
-        .product-name {
-            font-size: 16px;
-
-            font-weight: 700;
-
-            line-height: 1.4;
-
-            word-break: break-word;
-        }
-
-        .product-id {
-            margin-top: 6px;
-
-            color: #9ca3af;
-
-            font-size: 12px;
-        }
-
-        /* ==============================
-           EMPTY STATE
-           ============================== */
-
-        .empty {
-            width: 100%;
-
-            padding: 30px 20px;
-
-            background: #ffffff;
-
-            border: 1px solid #e5e7eb;
-
-            border-radius: 14px;
-
-            color: #6b7280;
-
-            font-size: 14px;
-
-            text-align: center;
-        }
-
-        /* ==============================
-           MOBILE
-           ============================== */
-
-        @media (max-width: 480px) {
-
-            .page {
-                padding: 16px;
-            }
-
-            .header-row {
-                align-items: center;
-            }
-
-            .header h1 {
-                font-size: 21px;
-            }
-
-            .subtitle {
-                font-size: 13px;
-            }
-
-            .add-button {
-                min-height: 40px;
-
-                padding: 0 11px;
-
-                font-size: 12px;
-            }
-
-            .product-item {
-                padding: 14px;
-            }
-
-            .product-name {
-                font-size: 15px;
-            }
-
-        }
-
-        /*
-         * ==============================
-         * NAVIGATION
-         * ==============================
-         */
-
-        .bottom-nav {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-
-            display: flex;
-            justify-content: space-around;
-
-            padding: 8px 6px;
-
-            background: #ffffff;
-            border-top: 1px solid #e5e7eb;
-
-            z-index: 1000;
-        }
-
-
-        .nav-item {
-            flex: 1;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            gap: 3px;
-
-            padding: 6px 2px;
-
-            color: #6b7280;
-
-            text-decoration: none;
-
-            font-size: 11px;
-        }
-
-
-        .nav-item span:first-child {
-            font-size: 19px;
-        }
-
-
-        .nav-item.active {
-            color: #2563eb;
-            font-weight: 700;
-        }
-
-
-        @media (min-width: 768px) {
-
-            .page {
-                padding: 40px 20px;
-                padding-bottom: 40px;
-            }
-
-
-            .bottom-nav {
-                position: static;
-
-                max-width: 600px;
-
-                margin: 24px auto 0;
-
-                border: 1px solid #e5e7eb;
-                border-radius: 14px;
-            }
-
-        }
-    </style>
-
+    <title>Daftar Produk - UMKM Sales Insight</title>
+    <?= $this->include('components/app_head') ?>
 </head>
-
-
 <body>
+    <?= $this->include('components/top_navbar') ?>
 
-
-    <div class="page">
-
-
-        <div class="container">
-
-
-            <!-- ==============================
-             HEADER
-             ============================== -->
-
-            <div class="header">
-
-
-                <div class="header-row">
-
-
-                    <div class="header-title">
-
-                        <h1>
-                            Produk
-                        </h1>
-
-                        <p class="subtitle">
-                            Daftar produk usaha
-                        </p>
-
+    <div class="container-fluid container-max-wide py-3 py-md-4">
+        <!-- Page Header Banner -->
+        <div class="card-custom border-0 p-4 mb-4 shadow-sm bg-gradient-header">
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-1 font-weight-semibold">
+                            <i class="bi bi-box-seam me-1"></i> Katalog Produk
+                        </span>
+                        <?php if (!empty($products)) : ?>
+                            <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1">
+                                <?= count($products) ?> Produk
+                            </span>
+                        <?php endif; ?>
                     </div>
-
-
-                    <a
-                        href="<?= site_url('products/create') ?>"
-                        class="add-button">
-                        + Tambah Produk
+                    <h1 class="h3 fw-bold text-dark tracking-tight mb-0">Daftar Produk</h1>
+                    <p class="text-muted small mb-0">Kelola katalog barang dan jasa usaha Anda</p>
+                </div>
+                <div>
+                    <a href="<?= site_url('products/create') ?>" class="btn btn-primary rounded-pill px-3.5 py-2 d-inline-flex align-items-center gap-2 shadow-sm font-weight-semibold">
+                        <i class="bi bi-plus-lg"></i>
+                        <span>Tambah Produk</span>
                     </a>
-
-
                 </div>
-
-
             </div>
-
-
-            <!-- ==============================
-             PRODUCT DATA
-             ============================== -->
-
-            <?php if (empty($products)) : ?>
-
-
-                <div class="empty">
-
-                    Belum ada produk.
-
-                </div>
-
-
-            <?php else : ?>
-
-
-                <div class="product-list">
-
-
-                    <?php foreach ($products as $product) : ?>
-
-
-                        <div class="product-item">
-
-
-                            <div class="product-name">
-
-                                <?= esc(
-                                    $product['name']
-                                ) ?>
-
-                            </div>
-
-
-                            <div class="product-id">
-
-                                ID:
-                                <?= esc(
-                                    $product['id']
-                                ) ?>
-
-                            </div>
-
-
-                        </div>
-
-
-                    <?php endforeach; ?>
-
-
-                </div>
-
-
-            <?php endif; ?>
-
-
         </div>
 
+        <?php if (empty($products)) : ?>
+            <div class="card-custom p-5 text-center my-4">
+                <div class="bg-blue-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <i class="bi bi-box-seam fs-3"></i>
+                </div>
+                <h6 class="fw-bold text-dark mb-1">Belum Ada Produk</h6>
+                <p class="text-muted small mb-3">Tambahkan produk pertama untuk mulai mencatat transaksi penjualan</p>
+                <div>
+                    <a href="<?= site_url('products/create') ?>" class="btn btn-primary btn-sm rounded-pill px-4 py-2">
+                        <i class="bi bi-plus-lg me-1"></i> Tambah Produk Sekarang
+                    </a>
+                </div>
+            </div>
+        <?php else : ?>
+            <!-- Desktop / Laptop View (Table Layout) -->
+            <div class="card-custom d-none d-md-block overflow-hidden mb-4">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light border-bottom">
+                            <tr class="text-muted small fw-semibold">
+                                <th class="ps-4 py-3" style="width: 100px;">ID</th>
+                                <th class="py-3">Nama Produk</th>
+                                <th class="py-3 text-center" style="width: 120px;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($products as $product) : ?>
+                                <tr>
+                                    <td class="ps-4 py-3">
+                                        <span class="badge bg-light text-secondary border fw-normal">
+                                            #<?= esc($product['id']) ?>
+                                        </span>
+                                    </td>
+                                    <td class="py-3">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="bg-blue-light rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 38px; height: 38px;">
+                                                <i class="bi bi-box-seam text-primary"></i>
+                                            </div>
+                                            <span class="fw-bold text-dark fs-6">
+                                                <?= esc($product['name']) ?>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 text-center">
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2.5 py-1 small">
+                                            Aktif
+                                        </span>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Mobile View (Card List) -->
+            <div class="d-md-none d-flex flex-column gap-3 mb-4">
+                <?php foreach ($products as $product) : ?>
+                    <div class="card-custom p-3 hover-lift">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-blue-light rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 42px; height: 42px;">
+                                <i class="bi bi-box-seam fs-5 text-primary"></i>
+                            </div>
+                            <div class="min-w-0 flex-grow-1">
+                                <h6 class="fw-bold text-dark text-truncate mb-0">
+                                    <?= esc($product['name']) ?>
+                                </h6>
+                                <span class="badge bg-light text-muted border font-weight-normal small">
+                                    ID: #<?= esc($product['id']) ?>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
     </div>
+
     <?= $this->include('components/bottom_nav') ?>
-
-
 </body>
-
 </html>

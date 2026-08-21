@@ -1,312 +1,135 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Pelanggan - UMKM Sales Insight</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            color: #1f2937;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 900px;
-            margin: auto;
-        }
-
-        /* ==============================
-           HEADER
-           ============================== */
-
-        .header {
-            margin-bottom: 20px;
-        }
-
-        .back-link {
-            display: inline-block;
-
-            margin-bottom: 14px;
-
-            color: #2563eb;
-
-            text-decoration: none;
-
-            font-size: 14px;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
-        .header-row {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 12px;
-        }
-
-        .header-title {
-            min-width: 0;
-        }
-
-        .header h1 {
-            margin: 0;
-
-            font-size: 24px;
-
-            line-height: 1.3;
-        }
-
-        .subtitle {
-            margin: 6px 0 0;
-
-            color: #6b7280;
-
-            font-size: 14px;
-
-            line-height: 1.5;
-        }
-
-        /* ==============================
-           ADD BUTTON
-           ============================== */
-
-        .add-button {
-            flex: 0 0 auto;
-
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            min-height: 42px;
-
-            padding: 0 14px;
-
-            background: #2563eb;
-
-            color: #ffffff;
-
-            border-radius: 10px;
-
-            text-decoration: none;
-
-            font-size: 13px;
-
-            font-weight: 700;
-
-            white-space: nowrap;
-        }
-
-        .add-button:hover {
-            background: #1d4ed8;
-        }
-
-        .add-button:active {
-            transform: scale(0.97);
-        }
-
-
-        .customer-list {
-            display: grid;
-            gap: 10px;
-        }
-
-        .customer-item {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 16px;
-        }
-
-        .customer-name {
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .customer-phone {
-            margin-top: 5px;
-            color: #6b7280;
-            font-size: 13px;
-        }
-
-        .customer-id {
-            margin-top: 5px;
-            color: #9ca3af;
-            font-size: 12px;
-        }
-
-        .empty {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 30px 20px;
-            text-align: center;
-            color: #6b7280;
-        }
-
-        .bottom-nav {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-
-            display: flex;
-            justify-content: space-around;
-
-            padding: 8px 6px;
-
-            background: #ffffff;
-            border-top: 1px solid #e5e7eb;
-
-            z-index: 1000;
-        }
-
-
-        .nav-item {
-            flex: 1;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            gap: 3px;
-
-            padding: 6px 2px;
-
-            color: #6b7280;
-
-            text-decoration: none;
-
-            font-size: 11px;
-        }
-
-
-        .nav-item span:first-child {
-            font-size: 19px;
-        }
-
-
-        .nav-item.active {
-            color: #2563eb;
-            font-weight: 700;
-        }
-
-
-        @media (min-width: 768px) {
-
-            .page {
-                padding: 40px 20px;
-                padding-bottom: 40px;
-            }
-
-
-            .bottom-nav {
-                position: static;
-
-                max-width: 600px;
-
-                margin: 24px auto 0;
-
-                border: 1px solid #e5e7eb;
-                border-radius: 14px;
-            }
-
-        }
-    </style>
+    <title>Daftar Pelanggan - UMKM Sales Insight</title>
+    <?= $this->include('components/app_head') ?>
 </head>
-
 <body>
-    <div class="page">
-        <div class="container">
+    <?= $this->include('components/top_navbar') ?>
 
-            <div class="header">
-
-
-                <div class="header-row">
-
-
-                    <div class="header-title">
-
-                        <h1>
-                            Pelanggan
-                        </h1>
-
-                        <p class="subtitle">
-                            Daftar pelanggan usaha
-                        </p>
-
+    <div class="container-fluid container-max-wide py-3 py-md-4">
+        <!-- Page Header Banner -->
+        <div class="card-custom border-0 p-4 mb-4 shadow-sm bg-gradient-header">
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="badge bg-green-light text-success border border-success-subtle rounded-pill px-3 py-1 font-weight-semibold">
+                            <i class="bi bi-people me-1"></i> Data Pelanggan
+                        </span>
+                        <?php if (!empty($customers)) : ?>
+                            <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1">
+                                <?= count($customers) ?> Pelanggan
+                            </span>
+                        <?php endif; ?>
                     </div>
-
-
-                    <a
-                        href="<?= site_url('customers/create') ?>"
-                        class="add-button">
-                        + Tambah pelanggan
-                    </a>
-
-
+                    <h1 class="h3 fw-bold text-dark tracking-tight mb-0">Daftar Pelanggan</h1>
+                    <p class="text-muted small mb-0">Daftar kontak pelanggan setia usaha Anda</p>
                 </div>
+                <div>
+                    <a href="<?= site_url('customers/create') ?>" class="btn btn-primary rounded-pill px-3.5 py-2 d-inline-flex align-items-center gap-2 shadow-sm font-weight-semibold">
+                        <i class="bi bi-plus-lg"></i>
+                        <span>Tambah Pelanggan</span>
+                    </a>
+                </div>
+            </div>
+        </div>
 
-
+        <?php if (empty($customers)) : ?>
+            <div class="card-custom p-5 text-center my-4">
+                <div class="bg-green-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <i class="bi bi-people fs-3"></i>
+                </div>
+                <h6 class="fw-bold text-dark mb-1">Belum Ada Pelanggan</h6>
+                <p class="text-muted small mb-3">Tambahkan kontak pelanggan untuk analisis transaksi yang lebih mendalam</p>
+                <div>
+                    <a href="<?= site_url('customers/create') ?>" class="btn btn-primary btn-sm rounded-pill px-4 py-2">
+                        <i class="bi bi-plus-lg me-1"></i> Tambah Pelanggan Baru
+                    </a>
+                </div>
+            </div>
+        <?php else : ?>
+            <!-- Desktop / Laptop View (Table Layout) -->
+            <div class="card-custom d-none d-md-block overflow-hidden mb-4">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light border-bottom">
+                            <tr class="text-muted small fw-semibold">
+                                <th class="ps-4 py-3" style="width: 100px;">ID</th>
+                                <th class="py-3">Nama Pelanggan</th>
+                                <th class="py-3">Nomor WhatsApp / HP</th>
+                                <th class="py-3 text-center" style="width: 120px;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($customers as $customer) : ?>
+                                <tr>
+                                    <td class="ps-4 py-3">
+                                        <span class="badge bg-light text-secondary border fw-normal">
+                                            #<?= esc($customer['id']) ?>
+                                        </span>
+                                    </td>
+                                    <td class="py-3">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="bg-green-light rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 38px; height: 38px;">
+                                                <i class="bi bi-person-fill text-success"></i>
+                                            </div>
+                                            <span class="fw-bold text-dark fs-6">
+                                                <?= esc($customer['name']) ?>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3">
+                                        <?php if (!empty($customer['phone'])) : ?>
+                                            <a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $customer['phone']) ?>" target="_blank" class="text-decoration-none text-dark d-inline-flex align-items-center gap-1 hover-lift">
+                                                <i class="bi bi-whatsapp text-success"></i>
+                                                <span><?= esc($customer['phone']) ?></span>
+                                            </a>
+                                        <?php else : ?>
+                                            <span class="text-muted small">-</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="py-3 text-center">
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2.5 py-1 small">
+                                            Aktif
+                                        </span>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-
-
-            <?php if (empty($customers)) : ?>
-
-                <div class="empty">
-                    Belum ada pelanggan.
-                </div>
-
-            <?php else : ?>
-
-                <div class="customer-list">
-
-                    <?php foreach ($customers as $customer) : ?>
-
-                        <div class="customer-item">
-
-                            <div class="customer-name">
-                                <?= esc($customer['name']) ?>
+            <!-- Mobile View (Card List) -->
+            <div class="d-md-none d-flex flex-column gap-3 mb-4">
+                <?php foreach ($customers as $customer) : ?>
+                    <div class="card-custom p-3 hover-lift">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-green-light rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 42px; height: 42px;">
+                                <i class="bi bi-person-fill fs-5 text-success"></i>
                             </div>
-
-                            <?php if (!empty($customer['phone'])) : ?>
-                                <div class="customer-phone">
-                                    <?= esc($customer['phone']) ?>
+                            <div class="min-w-0 flex-grow-1">
+                                <h6 class="fw-bold text-dark text-truncate mb-1">
+                                    <?= esc($customer['name']) ?>
+                                </h6>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-light text-muted border font-weight-normal small">
+                                        ID: #<?= esc($customer['id']) ?>
+                                    </span>
+                                    <?php if (!empty($customer['phone'])) : ?>
+                                        <span class="text-muted small">
+                                            <i class="bi bi-whatsapp text-success me-1"></i><?= esc($customer['phone']) ?>
+                                        </span>
+                                    <?php endif; ?>
                                 </div>
-                            <?php endif; ?>
-
-                            <div class="customer-id">
-                                ID: <?= esc($customer['id']) ?>
                             </div>
-
                         </div>
-
-                    <?php endforeach; ?>
-
-                </div>
-
-            <?php endif; ?>
-
-        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
     </div>
+
     <?= $this->include('components/bottom_nav') ?>
 </body>
-
 </html>

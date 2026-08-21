@@ -7,8 +7,7 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+        content="width=device-width, initial-scale=1.0">
 
     <title>
         <?= esc($business['name'] ?? 'Dashboard') ?>
@@ -16,9 +15,9 @@
     </title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <?= $this->include('components/app_head') ?>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
@@ -625,8 +624,7 @@
 
             .filter-form {
                 grid-template-columns:
-                    1fr
-                    1fr;
+                    1fr 1fr;
             }
 
             .filter-button {
@@ -635,9 +633,7 @@
 
             .kpi-grid {
                 grid-template-columns:
-                    2fr
-                    1fr
-                    1fr;
+                    2fr 1fr 1fr;
             }
 
             .kpi-card.primary {
@@ -646,8 +642,7 @@
 
             .actions {
                 grid-template-columns:
-                    1fr
-                    1fr;
+                    1fr 1fr;
             }
 
             .main-nav {
@@ -686,10 +681,7 @@
 
             .filter-form {
                 grid-template-columns:
-                    1fr
-                    1fr
-                    1fr
-                    auto;
+                    1fr 1fr 1fr auto;
                 align-items: end;
             }
 
@@ -700,10 +692,7 @@
 
             .kpi-grid {
                 grid-template-columns:
-                    2fr
-                    1fr
-                    1fr
-                    1fr;
+                    2fr 1fr 1fr 1fr;
             }
 
             .chart-container {
@@ -747,7 +736,6 @@
             }
 
         }
-
     </style>
 
 </head>
@@ -755,1022 +743,803 @@
 
 <body>
 
-<div class="page">
+    <?= $this->include('components/top_navbar') ?>
 
-<div class="container">
+    <div class="page">
 
-
-    <!-- ==========================================
-         HEADER
-    =========================================== -->
-
-    <header class="header">
-
-        <div>
-
-            <div class="business">
-                <?= esc($business['name'] ?? '') ?>
-            </div>
-
-            <h1>
-                Sales Dashboard
-            </h1>
-
-            <p class="welcome">
-                Halo,
-                <?= esc($session['user_name'] ?? '') ?>.
-                Berikut ringkasan performa penjualan Anda.
-            </p>
-
-            <div class="period-badge">
-
-                <span class="period-dot"></span>
-
-                <?php if ($period === 'monthly') : ?>
-
-                    Periode:
-                    <?= esc($month_name) ?>
-                    <?= esc($year) ?>
-
-                <?php else : ?>
-
-                    Periode:
-                    Tahun
-                    <?= esc($year) ?>
-
-                <?php endif; ?>
-
-            </div>
-
-        </div>
+        <div class="container">
 
 
-        <a
-            href="<?= site_url('logout') ?>"
-            class="logout"
-        >
-            Keluar
-        </a>
+            <!-- ==========================================
+                 HEADER
+            =========================================== -->
 
-    </header>
+            <header class="card-custom border-0 p-4 p-md-4 mb-4 shadow-sm bg-gradient-header">
+                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                            <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-1-5 font-weight-semibold d-inline-flex align-items-center gap-1">
+                                <i class="bi bi-building"></i> <?= esc($business['name'] ?? '') ?>
+                            </span>
+                            <span class="badge bg-light text-secondary border rounded-pill px-3 py-1-5 font-weight-normal d-inline-flex align-items-center gap-1">
+                                <span class="period-dot me-1"></span>
+                                <?php if ($period === 'monthly') : ?>
+                                    Periode: <?= esc($month_name) ?> <?= esc($year) ?>
+                                <?php else : ?>
+                                    Periode: Tahun <?= esc($year) ?>
+                                <?php endif; ?>
+                            </span>
+                        </div>
+                        <h1 class="h3 fw-bold text-dark tracking-tight mb-1">
+                            Sales Dashboard
+                        </h1>
+                        <p class="text-muted small mb-0">
+                            Halo, <span class="fw-semibold text-dark"><?= esc($session['user_name'] ?? '') ?></span>. Berikut ringkasan performa & insight penjualan usaha Anda.
+                        </p>
+                    </div>
+                </div>
+            </header>
 
 
-    <!-- ==========================================
+            <!-- ==========================================
          1. SALES INSIGHT
     =========================================== -->
 
-    <section class="card insight-card">
+            <section class="card insight-card">
 
-        <h2 class="card-title">
-            Sales Insight
-        </h2>
+                <h2 class="card-title">
+                    Sales Insight
+                </h2>
 
-        <p class="card-subtitle">
-            Ringkasan otomatis berdasarkan akumulasi periode
-        </p>
-
-
-        <div class="insight-period">
-
-            Data yang digunakan:
-
-            <strong>
-
-                <?php if ($period === 'monthly') : ?>
-
-                    <?= esc($month_name) ?>
-                    <?= esc($year) ?>
-
-                <?php else : ?>
-
-                    Januari -
-                    Desember
-                    <?= esc($year) ?>
-
-                <?php endif; ?>
-
-            </strong>
-
-        </div>
+                <p class="card-subtitle">
+                    Ringkasan otomatis berdasarkan akumulasi periode
+                </p>
 
 
-        <div class="insight-list">
+                <div class="insight-period">
 
-            <?php if (!empty($insights)) : ?>
+                    Data yang digunakan:
 
-                <?php foreach ($insights as $insight) : ?>
+                    <strong>
 
-                    <div class="insight">
+                        <?php if ($period === 'monthly') : ?>
 
-                        <?= $insight ?>
+                            <?= esc($month_name) ?>
+                            <?= esc($year) ?>
 
-                    </div>
+                        <?php else : ?>
 
-                <?php endforeach; ?>
+                            Januari -
+                            Desember
+                            <?= esc($year) ?>
 
-            <?php else : ?>
+                        <?php endif; ?>
 
-                <div class="insight">
-
-                    Belum tersedia insight untuk periode ini.
+                    </strong>
 
                 </div>
 
-            <?php endif; ?>
 
-        </div>
+                <div class="insight-list">
 
-    </section>
+                    <?php if (!empty($insights)) : ?>
 
+                        <?php foreach ($insights as $insight) : ?>
 
-    <!-- ==========================================
-         2. KPI
-    =========================================== -->
+                            <div class="insight">
 
-    <section class="kpi-grid">
-
-
-        <div class="kpi-card primary">
-
-            <div class="kpi-label">
-                Total Penjualan
-            </div>
-
-            <div class="kpi-value">
-
-                Rp
-                <?= number_format(
-                    (float) $kpi['total_sales'],
-                    0,
-                    ',',
-                    '.'
-                ) ?>
-
-            </div>
-
-        </div>
-
-
-        <div class="kpi-card">
-
-            <div class="kpi-label">
-                Transaksi
-            </div>
-
-            <div class="kpi-value">
-
-                <?= number_format(
-                    $kpi['total_transactions'],
-                    0,
-                    ',',
-                    '.'
-                ) ?>
-
-            </div>
-
-        </div>
-
-
-        <div class="kpi-card">
-
-            <div class="kpi-label">
-                Produk Terjual
-            </div>
-
-            <div class="kpi-value">
-
-                <?= number_format(
-                    $kpi['total_quantity'],
-                    0,
-                    ',',
-                    '.'
-                ) ?>
-
-            </div>
-
-        </div>
-
-
-        <div class="kpi-card">
-
-            <div class="kpi-label">
-                Customer
-            </div>
-
-            <div class="kpi-value">
-
-                <?= number_format(
-                    $kpi['total_customers'],
-                    0,
-                    ',',
-                    '.'
-                ) ?>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ==========================================
-         3. PENJUALAN PER CHANNEL
-    =========================================== -->
-
-    <section class="card channel-card">
-
-        <h2 class="card-title">
-            Penjualan per Channel
-        </h2>
-
-        <p class="card-subtitle">
-            Akumulasi kontribusi setiap channel pada periode terpilih
-        </p>
-
-
-        <?php
-
-        $maxChannelSales = 0;
-        $hasChannelSales = false;
-
-        foreach ($channels as $channel) {
-
-            $value =
-                (float) $channel['total_sales'];
-
-            if ($value > $maxChannelSales) {
-                $maxChannelSales = $value;
-            }
-
-            if ($value > 0) {
-                $hasChannelSales = true;
-            }
-        }
-
-        ?>
-
-
-        <?php if ($hasChannelSales) : ?>
-
-            <div class="channel-list">
-
-                <?php foreach ($channels as $channel) : ?>
-
-                    <?php
-
-                    $channelSales =
-                        (float) $channel['total_sales'];
-
-                    if ($channelSales <= 0) {
-                        continue;
-                    }
-
-                    $percentage =
-                        $kpi['total_sales'] > 0
-                        ? (
-                            $channelSales
-                            / $kpi['total_sales']
-                        ) * 100
-                        : 0;
-
-                    $barWidth =
-                        $maxChannelSales > 0
-                        ? (
-                            $channelSales
-                            / $maxChannelSales
-                        ) * 100
-                        : 0;
-
-                    ?>
-
-                    <div class="channel-item">
-
-                        <div class="channel-header">
-
-                            <span class="channel-name">
-
-                                <?= esc(
-                                    $channel['channel_name']
-                                ) ?>
-
-                            </span>
-
-                            <span class="channel-value">
-
-                                Rp
-                                <?= number_format(
-                                    $channelSales,
-                                    0,
-                                    ',',
-                                    '.'
-                                ) ?>
-
-                            </span>
-
-                        </div>
-
-
-                        <div class="channel-bar">
-
-                            <div
-                                class="channel-progress"
-                                style="
-                                    width:
-                                    <?= $barWidth ?>%;
-                                "
-                            ></div>
-
-                        </div>
-
-
-                        <div class="channel-meta">
-
-                            <?= number_format(
-                                $percentage,
-                                1,
-                                ',',
-                                '.'
-                            ) ?>%
-
-                            ·
-
-                            <?= number_format(
-                                (int)
-                                $channel['total_transactions'],
-                                0,
-                                ',',
-                                '.'
-                            ) ?>
-
-                            transaksi
-
-                        </div>
-
-                    </div>
-
-                <?php endforeach; ?>
-
-            </div>
-
-        <?php else : ?>
-
-            <div class="insight">
-
-                Belum ada penjualan pada periode ini.
-
-            </div>
-
-        <?php endif; ?>
-
-    </section>
-
-
-    <!-- ==========================================
-         4. PRODUK TERATAS
-    =========================================== -->
-
-    <section class="card products-card">
-
-        <h2 class="card-title">
-            Produk Teratas
-        </h2>
-
-        <p class="card-subtitle">
-            Top 5 berdasarkan akumulasi nilai penjualan
-        </p>
-
-
-        <?php
-
-        $hasProducts = false;
-
-        foreach ($products as $product) {
-
-            if (
-                (float) $product['total_sales'] > 0
-            ) {
-
-                $hasProducts = true;
-
-                break;
-            }
-        }
-
-        ?>
-
-
-        <?php if ($hasProducts) : ?>
-
-            <div class="product-list">
-
-                <?php
-
-                $rank = 1;
-
-                foreach ($products as $product) :
-
-                    if (
-                        (float)
-                        $product['total_sales']
-                        <= 0
-                    ) {
-                        continue;
-                    }
-
-                ?>
-
-                    <div class="product-item">
-
-                        <div class="product-info">
-
-                            <div class="product-rank">
-
-                                <?= $rank ?>
+                                <?= $insight ?>
 
                             </div>
 
+                        <?php endforeach; ?>
 
-                            <div class="product-name-wrap">
+                    <?php else : ?>
 
-                                <div class="product-name">
+                        <div class="insight">
 
-                                    <?= esc(
-                                        $product['product_name']
-                                    ) ?>
+                            Belum tersedia insight untuk periode ini.
+
+                        </div>
+
+                    <?php endif; ?>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==========================================
+         2. KPI
+    =========================================== -->
+
+            <section class="kpi-grid">
+
+
+                <div class="kpi-card primary">
+
+                    <div class="kpi-label">
+                        Total Penjualan
+                    </div>
+
+                    <div class="kpi-value">
+
+                        Rp
+                        <?= number_format(
+                            (float) $kpi['total_sales'],
+                            0,
+                            ',',
+                            '.'
+                        ) ?>
+
+                    </div>
+
+                </div>
+
+
+                <div class="kpi-card">
+
+                    <div class="kpi-label">
+                        Transaksi
+                    </div>
+
+                    <div class="kpi-value">
+
+                        <?= number_format(
+                            $kpi['total_transactions'],
+                            0,
+                            ',',
+                            '.'
+                        ) ?>
+
+                    </div>
+
+                </div>
+
+
+                <div class="kpi-card">
+
+                    <div class="kpi-label">
+                        Produk Terjual
+                    </div>
+
+                    <div class="kpi-value">
+
+                        <?= number_format(
+                            $kpi['total_quantity'],
+                            0,
+                            ',',
+                            '.'
+                        ) ?>
+
+                    </div>
+
+                </div>
+
+
+                <div class="kpi-card">
+
+                    <div class="kpi-label">
+                        Customer
+                    </div>
+
+                    <div class="kpi-value">
+
+                        <?= number_format(
+                            $kpi['total_customers'],
+                            0,
+                            ',',
+                            '.'
+                        ) ?>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==========================================
+         3. PENJUALAN PER CHANNEL
+    =========================================== -->
+
+            <section class="card channel-card">
+
+                <h2 class="card-title">
+                    Penjualan per Channel
+                </h2>
+
+                <p class="card-subtitle">
+                    Akumulasi kontribusi setiap channel pada periode terpilih
+                </p>
+
+
+                <?php
+
+                $maxChannelSales = 0;
+                $hasChannelSales = false;
+
+                foreach ($channels as $channel) {
+
+                    $value =
+                        (float) $channel['total_sales'];
+
+                    if ($value > $maxChannelSales) {
+                        $maxChannelSales = $value;
+                    }
+
+                    if ($value > 0) {
+                        $hasChannelSales = true;
+                    }
+                }
+
+                ?>
+
+
+                <?php if ($hasChannelSales) : ?>
+
+                    <div class="channel-list">
+
+                        <?php foreach ($channels as $channel) : ?>
+
+                            <?php
+
+                            $channelSales =
+                                (float) $channel['total_sales'];
+
+                            if ($channelSales <= 0) {
+                                continue;
+                            }
+
+                            $percentage =
+                                $kpi['total_sales'] > 0
+                                ? (
+                                    $channelSales
+                                    / $kpi['total_sales']
+                                ) * 100
+                                : 0;
+
+                            $barWidth =
+                                $maxChannelSales > 0
+                                ? (
+                                    $channelSales
+                                    / $maxChannelSales
+                                ) * 100
+                                : 0;
+
+                            ?>
+
+                            <div class="channel-item">
+
+                                <div class="channel-header">
+
+                                    <span class="channel-name">
+
+                                        <?= esc(
+                                            $channel['channel_name']
+                                        ) ?>
+
+                                    </span>
+
+                                    <span class="channel-value">
+
+                                        Rp
+                                        <?= number_format(
+                                            $channelSales,
+                                            0,
+                                            ',',
+                                            '.'
+                                        ) ?>
+
+                                    </span>
 
                                 </div>
 
-                                <div class="product-sales">
 
-                                    Rp
+                                <div class="channel-bar">
+
+                                    <div
+                                        class="channel-progress"
+                                        style="
+                                    width:
+                                    <?= $barWidth ?>%;
+                                "></div>
+
+                                </div>
+
+
+                                <div class="channel-meta">
+
                                     <?= number_format(
-                                        (float)
-                                        $product['total_sales'],
+                                        $percentage,
+                                        1,
+                                        ',',
+                                        '.'
+                                    ) ?>%
+
+                                    ·
+
+                                    <?= number_format(
+                                        (int)
+                                        $channel['total_transactions'],
                                         0,
                                         ',',
                                         '.'
                                     ) ?>
 
+                                    transaksi
+
                                 </div>
 
                             </div>
 
-                        </div>
-
-
-                        <div class="product-qty">
-
-                            <?= number_format(
-                                (float)
-                                $product['total_quantity'],
-                                0,
-                                ',',
-                                '.'
-                            ) ?>
-
-                            unit
-
-                        </div>
+                        <?php endforeach; ?>
 
                     </div>
+
+                <?php else : ?>
+
+                    <div class="insight">
+
+                        Belum ada penjualan pada periode ini.
+
+                    </div>
+
+                <?php endif; ?>
+
+            </section>
+
+
+            <!-- ==========================================
+         4. PRODUK TERATAS
+    =========================================== -->
+
+            <section class="card products-card">
+
+                <h2 class="card-title">
+                    Produk Teratas
+                </h2>
+
+                <p class="card-subtitle">
+                    Top 5 berdasarkan akumulasi nilai penjualan
+                </p>
 
 
                 <?php
 
-                    $rank++;
+                $hasProducts = false;
 
-                endforeach;
+                foreach ($products as $product) {
+
+                    if (
+                        (float) $product['total_sales'] > 0
+                    ) {
+
+                        $hasProducts = true;
+
+                        break;
+                    }
+                }
 
                 ?>
 
-            </div>
 
-        <?php else : ?>
+                <?php if ($hasProducts) : ?>
 
-            <div class="insight">
+                    <div class="product-list">
 
-                Belum ada penjualan produk.
+                        <?php
 
-            </div>
+                        $rank = 1;
 
-        <?php endif; ?>
+                        foreach ($products as $product) :
 
-    </section>
+                            if (
+                                (float)
+                                $product['total_sales']
+                                <= 0
+                            ) {
+                                continue;
+                            }
+
+                        ?>
+
+                            <div class="product-item">
+
+                                <div class="product-info">
+
+                                    <div class="product-rank">
+
+                                        <?= $rank ?>
+
+                                    </div>
 
 
-    <!-- ==========================================
+                                    <div class="product-name-wrap">
+
+                                        <div class="product-name">
+
+                                            <?= esc(
+                                                $product['product_name']
+                                            ) ?>
+
+                                        </div>
+
+                                        <div class="product-sales">
+
+                                            Rp
+                                            <?= number_format(
+                                                (float)
+                                                $product['total_sales'],
+                                                0,
+                                                ',',
+                                                '.'
+                                            ) ?>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="product-qty">
+
+                                    <?= number_format(
+                                        (float)
+                                        $product['total_quantity'],
+                                        0,
+                                        ',',
+                                        '.'
+                                    ) ?>
+
+                                    unit
+
+                                </div>
+
+                            </div>
+
+
+                        <?php
+
+                            $rank++;
+
+                        endforeach;
+
+                        ?>
+
+                    </div>
+
+                <?php else : ?>
+
+                    <div class="insight">
+
+                        Belum ada penjualan produk.
+
+                    </div>
+
+                <?php endif; ?>
+
+            </section>
+
+
+            <!-- ==========================================
          5. FILTER
     =========================================== -->
 
-    <section class="filter-card">
+            <section class="filter-card">
 
-        <div class="filter-header">
+                <div class="filter-header">
 
-            <h2 class="filter-title">
-                Filter Periode
-            </h2>
+                    <h2 class="filter-title">
+                        Filter Periode
+                    </h2>
 
-            <p class="filter-description">
-                Pilih periode untuk melihat akumulasi performa penjualan.
-            </p>
+                    <p class="filter-description">
+                        Pilih periode untuk melihat akumulasi performa penjualan.
+                    </p>
 
-        </div>
-
-
-        <form
-            method="get"
-            action="<?= site_url('home') ?>"
-            class="filter-form"
-        >
-
-            <div class="filter-group">
-
-                <label for="period">
-                    Periode
-                </label>
-
-                <select
-                    name="period"
-                    id="period"
-                >
-
-                    <option
-                        value="monthly"
-                        <?= $period === 'monthly'
-                            ? 'selected'
-                            : '' ?>
-                    >
-                        Bulanan
-                    </option>
-
-                    <option
-                        value="yearly"
-                        <?= $period === 'yearly'
-                            ? 'selected'
-                            : '' ?>
-                    >
-                        Tahunan
-                    </option>
-
-                </select>
-
-            </div>
+                </div>
 
 
-            <div class="filter-group">
+                <form
+                    method="get"
+                    action="<?= site_url('home') ?>"
+                    class="filter-form">
 
-                <label for="year">
-                    Tahun
-                </label>
+                    <div class="filter-group">
 
-                <select
-                    name="year"
-                    id="year"
-                >
+                        <label for="period">
+                            Periode
+                        </label>
 
-                    <?php for (
-                        $y = date('Y');
-                        $y >= 2020;
-                        $y--
-                    ) : ?>
+                        <select
+                            name="period"
+                            id="period">
 
-                        <option
-                            value="<?= $y ?>"
-                            <?= $year == $y
-                                ? 'selected'
-                                : '' ?>
-                        >
-                            <?= $y ?>
-                        </option>
+                            <option
+                                value="monthly"
+                                <?= $period === 'monthly'
+                                    ? 'selected'
+                                    : '' ?>>
+                                Bulanan
+                            </option>
 
-                    <?php endfor; ?>
+                            <option
+                                value="yearly"
+                                <?= $period === 'yearly'
+                                    ? 'selected'
+                                    : '' ?>>
+                                Tahunan
+                            </option>
 
-                </select>
+                        </select>
 
-            </div>
-
-
-            <div
-                class="filter-group"
-                id="month-filter"
-            >
-
-                <label for="month">
-                    Bulan
-                </label>
-
-                <select
-                    name="month"
-                    id="month"
-                >
-
-                    <?php
-
-                    $months = [
-                        1  => 'Januari',
-                        2  => 'Februari',
-                        3  => 'Maret',
-                        4  => 'April',
-                        5  => 'Mei',
-                        6  => 'Juni',
-                        7  => 'Juli',
-                        8  => 'Agustus',
-                        9  => 'September',
-                        10 => 'Oktober',
-                        11 => 'November',
-                        12 => 'Desember',
-                    ];
-
-                    ?>
+                    </div>
 
 
-                    <?php foreach (
-                        $months as $number => $name
-                    ) : ?>
+                    <div class="filter-group">
 
-                        <option
-                            value="<?= $number ?>"
-                            <?= $month == $number
-                                ? 'selected'
-                                : '' ?>
-                        >
-                            <?= $name ?>
-                        </option>
+                        <label for="year">
+                            Tahun
+                        </label>
 
-                    <?php endforeach; ?>
+                        <select
+                            name="year"
+                            id="year">
 
-                </select>
+                            <?php for (
+                                $y = date('Y');
+                                $y >= 2020;
+                                $y--
+                            ) : ?>
 
-            </div>
+                                <option
+                                    value="<?= $y ?>"
+                                    <?= $year == $y
+                                        ? 'selected'
+                                        : '' ?>>
+                                    <?= $y ?>
+                                </option>
+
+                            <?php endfor; ?>
+
+                        </select>
+
+                    </div>
 
 
-            <button
-                type="submit"
-                class="filter-button"
-            >
-                Tampilkan
-            </button>
+                    <div
+                        class="filter-group"
+                        id="month-filter">
 
-        </form>
+                        <label for="month">
+                            Bulan
+                        </label>
 
-    </section>
+                        <select
+                            name="month"
+                            id="month">
+
+                            <?php
+
+                            $months = [
+                                1  => 'Januari',
+                                2  => 'Februari',
+                                3  => 'Maret',
+                                4  => 'April',
+                                5  => 'Mei',
+                                6  => 'Juni',
+                                7  => 'Juli',
+                                8  => 'Agustus',
+                                9  => 'September',
+                                10 => 'Oktober',
+                                11 => 'November',
+                                12 => 'Desember',
+                            ];
+
+                            ?>
 
 
-    <!-- ==========================================
+                            <?php foreach (
+                                $months as $number => $name
+                            ) : ?>
+
+                                <option
+                                    value="<?= $number ?>"
+                                    <?= $month == $number
+                                        ? 'selected'
+                                        : '' ?>>
+                                    <?= $name ?>
+                                </option>
+
+                            <?php endforeach; ?>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="filter-button">
+                        Tampilkan
+                    </button>
+
+                </form>
+
+            </section>
+
+
+            <!-- ==========================================
          6. GRAFIK TREND PENJUALAN
     =========================================== -->
 
-    <section class="card chart-card">
+            <section class="card chart-card">
 
-        <h2 class="card-title">
-            Trend Penjualan
-        </h2>
+                <h2 class="card-title">
+                    Trend Penjualan
+                </h2>
 
-        <p class="card-subtitle">
+                <p class="card-subtitle">
 
-            <?php if ($period === 'monthly') : ?>
+                    <?php if ($period === 'monthly') : ?>
 
-                Pergerakan penjualan harian selama
-                <?= esc($month_name) ?>
-                <?= esc($year) ?>
+                        Pergerakan penjualan harian selama
+                        <?= esc($month_name) ?>
+                        <?= esc($year) ?>
 
-            <?php else : ?>
+                    <?php else : ?>
 
-                Pergerakan penjualan bulanan selama tahun
-                <?= esc($year) ?>
+                        Pergerakan penjualan bulanan selama tahun
+                        <?= esc($year) ?>
 
-            <?php endif; ?>
+                    <?php endif; ?>
 
-        </p>
-
-
-        <div class="chart-container">
-
-            <canvas id="salesTrendChart"></canvas>
-
-        </div>
-
-    </section>
+                </p>
 
 
-    <!-- ==========================================
+                <div class="chart-container">
+
+                    <canvas id="salesTrendChart"></canvas>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==========================================
          7. SALES ACTIONS
     =========================================== -->
 
-    <div class="actions">
+            <div class="actions">
 
-        <a
-            href="<?= site_url('sales/input') ?>"
-            class="action action-primary"
-        >
-            + Catat Penjualan
-        </a>
+                <a
+                    href="<?= site_url('sales/input') ?>"
+                    class="action action-primary">
+                    + Catat Penjualan
+                </a>
 
 
-        <a
-            href="<?= site_url('sales/history') ?>"
-            class="action action-secondary"
-        >
-            Riwayat Penjualan
-        </a>
+                <a
+                    href="<?= site_url('sales/history') ?>"
+                    class="action action-secondary">
+                    Riwayat Penjualan
+                </a>
+
+            </div>
+
+
+
+
+        </div>
 
     </div>
 
 
-    <!-- ==========================================
-         8. FULL NAVIGATION
-    =========================================== -->
-
-    <nav
-        class="main-nav"
-        aria-label="Menu utama"
-    >
-
-
-        <a
-            href="<?= site_url('sales/input') ?>"
-            class="nav-card"
-        >
-
-            <span class="nav-icon">
-                ▣
-            </span>
-
-            <span class="nav-content">
-
-                <span class="nav-title">
-                    Penjualan
-                </span>
-
-                <span class="nav-description">
-                    Catat penjualan
-                </span>
-
-            </span>
-
-        </a>
-
-
-        <a
-            href="<?= site_url('products') ?>"
-            class="nav-card"
-        >
-
-            <span class="nav-icon">
-                ◫
-            </span>
-
-            <span class="nav-content">
-
-                <span class="nav-title">
-                    Produk
-                </span>
-
-                <span class="nav-description">
-                    Kelola produk
-                </span>
-
-            </span>
-
-        </a>
-
-
-        <a
-            href="<?= site_url('customers') ?>"
-            class="nav-card"
-        >
-
-            <span class="nav-icon">
-                ♙
-            </span>
-
-            <span class="nav-content">
-
-                <span class="nav-title">
-                    Pelanggan
-                </span>
-
-                <span class="nav-description">
-                    Kelola pelanggan
-                </span>
-
-            </span>
-
-        </a>
-
-
-        <a
-            href="<?= site_url('channels') ?>"
-            class="nav-card"
-        >
-
-            <span class="nav-icon">
-                ⌁
-            </span>
-
-            <span class="nav-content">
-
-                <span class="nav-title">
-                    Channel
-                </span>
-
-                <span class="nav-description">
-                    Channel penjualan
-                </span>
-
-            </span>
-
-        </a>
-
-
-        <a
-            href="<?= site_url('business/profile') ?>"
-            class="nav-card"
-        >
-
-            <span class="nav-icon">
-                ⚙
-            </span>
-
-            <span class="nav-content">
-
-                <span class="nav-title">
-                    Usaha
-                </span>
-
-                <span class="nav-description">
-                    Profil usaha
-                </span>
-
-            </span>
-
-        </a>
-
-
-        <a
-            href="<?= site_url('logout') ?>"
-            class="nav-card logout-card"
-        >
-
-            <span class="nav-icon">
-                ↪
-            </span>
-
-            <span class="nav-content">
-
-                <span class="nav-title">
-                    Keluar
-                </span>
-
-                <span class="nav-description">
-                    Keluar aplikasi
-                </span>
-
-            </span>
-
-        </a>
-
-
-    </nav>
-
-
-</div>
-
-</div>
-
-
-<script>
-
-
-    /* ==========================================
+    <script>
+        /* ==========================================
        SALES TREND CHART
     ========================================== */
 
-    const trendLabels =
-        <?= json_encode(
-            $trend_labels,
-            JSON_UNESCAPED_UNICODE
-        ) ?>;
+        const trendLabels =
+            <?= json_encode(
+                $trend_labels,
+                JSON_UNESCAPED_UNICODE
+            ) ?>;
 
 
-    const trendValues =
-        <?= json_encode(
-            $trend_values
-        ) ?>;
+        const trendValues =
+            <?= json_encode(
+                $trend_values
+            ) ?>;
 
 
-    const currencyFormat =
-        new Intl.NumberFormat(
-            'id-ID'
-        );
+        const currencyFormat =
+            new Intl.NumberFormat(
+                'id-ID'
+            );
 
 
-    new Chart(
+        new Chart(
 
-        document.getElementById(
-            'salesTrendChart'
-        ),
+            document.getElementById(
+                'salesTrendChart'
+            ),
 
-        {
+            {
 
-            type: 'line',
+                type: 'line',
 
-            data: {
+                data: {
 
-                labels: trendLabels,
+                    labels: trendLabels,
 
-                datasets: [
+                    datasets: [
 
-                    {
+                        {
 
-                        label: 'Penjualan',
+                            label: 'Penjualan',
 
-                        data: trendValues,
+                            data: trendValues,
 
-                        tension: 0.35,
+                            tension: 0.35,
 
-                        fill: true,
+                            fill: true,
 
-                        borderWidth: 2,
+                            borderWidth: 2,
 
-                        pointRadius: 2.5,
+                            pointRadius: 2.5,
 
-                        pointHoverRadius: 5
+                            pointHoverRadius: 5
 
-                    }
+                        }
 
-                ]
-
-            },
-
-
-            options: {
-
-                responsive: true,
-
-                maintainAspectRatio: false,
-
-
-                interaction: {
-
-                    intersect: false,
-
-                    mode: 'index'
+                    ]
 
                 },
 
 
-                plugins: {
+                options: {
 
-                    legend: {
+                    responsive: true,
 
-                        display: false
+                    maintainAspectRatio: false,
+
+
+                    interaction: {
+
+                        intersect: false,
+
+                        mode: 'index'
 
                     },
 
 
-                    tooltip: {
+                    plugins: {
 
-                        callbacks: {
-
-                            label:
-                                function(context) {
-
-                                    return 'Rp '
-                                        +
-                                        currencyFormat
-                                        .format(
-                                            context
-                                                .parsed
-                                                .y
-                                        );
-
-                                }
-
-                        }
-
-                    }
-
-                },
-
-
-                scales: {
-
-                    x: {
-
-                        grid: {
+                        legend: {
 
                             display: false
 
                         },
 
-                        ticks: {
 
-                            maxTicksLimit: 8,
+                        tooltip: {
 
-                            font: {
+                            callbacks: {
 
-                                size: 10
+                                label: function(context) {
+
+                                    return 'Rp ' +
+                                        currencyFormat
+                                        .format(
+                                            context
+                                            .parsed
+                                            .y
+                                        );
+
+                                }
 
                             }
 
@@ -1779,31 +1548,56 @@
                     },
 
 
-                    y: {
+                    scales: {
 
-                        beginAtZero: true,
+                        x: {
 
-                        ticks: {
+                            grid: {
 
-                            maxTicksLimit: 5,
-
-                            font: {
-
-                                size: 10
+                                display: false
 
                             },
 
-                            callback:
-                                function(value) {
+                            ticks: {
 
-                                    return 'Rp '
-                                        +
+                                maxTicksLimit: 8,
+
+                                font: {
+
+                                    size: 10
+
+                                }
+
+                            }
+
+                        },
+
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            ticks: {
+
+                                maxTicksLimit: 5,
+
+                                font: {
+
+                                    size: 10
+
+                                },
+
+                                callback: function(value) {
+
+                                    return 'Rp ' +
                                         currencyFormat
                                         .format(
                                             value
                                         );
 
                                 }
+
+                            }
 
                         }
 
@@ -1813,57 +1607,54 @@
 
             }
 
-        }
-
-    );
-
-
-    /* ==========================================
-       MONTH FILTER
-    ========================================== */
-
-    const periodSelect =
-        document.getElementById(
-            'period'
         );
 
 
-    const monthFilter =
-        document.getElementById(
-            'month-filter'
-        );
+        /* ==========================================
+           MONTH FILTER
+        ========================================== */
+
+        const periodSelect =
+            document.getElementById(
+                'period'
+            );
 
 
-    function updateMonthFilter()
-    {
+        const monthFilter =
+            document.getElementById(
+                'month-filter'
+            );
 
-        if (
-            periodSelect.value === 'yearly'
-        ) {
 
-            monthFilter.style.display =
-                'none';
+        function updateMonthFilter() {
 
-        } else {
+            if (
+                periodSelect.value === 'yearly'
+            ) {
 
-            monthFilter.style.display =
-                'block';
+                monthFilter.style.display =
+                    'none';
+
+            } else {
+
+                monthFilter.style.display =
+                    'block';
+
+            }
 
         }
 
-    }
+
+        periodSelect.addEventListener(
+            'change',
+            updateMonthFilter
+        );
 
 
-    periodSelect.addEventListener(
-        'change',
-        updateMonthFilter
-    );
+        updateMonthFilter();
+    </script>
 
-
-    updateMonthFilter();
-
-</script>
-
+    <?= $this->include('components/bottom_nav') ?>
 
 </body>
 
